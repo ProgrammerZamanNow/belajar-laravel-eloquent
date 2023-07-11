@@ -55,5 +55,17 @@ class CategoryTest extends TestCase
         self::assertEquals("Food Category", $category->description);
     }
 
+    public function testUpdate()
+    {
+        $this->seed(CategorySeeder::class);
+
+        $category = Category::find("FOOD");
+        $category->name = "Food Updated";
+
+        $result = $category->update();
+        self::assertTrue($result);
+
+    }
+
 
 }
