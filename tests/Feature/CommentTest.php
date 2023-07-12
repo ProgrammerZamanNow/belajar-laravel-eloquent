@@ -21,4 +21,18 @@ class CommentTest extends TestCase
         self::assertNotNull($comment->id);
 
     }
+
+    public function testDefaultAttributeValues()
+    {
+        $comment = new Comment();
+        $comment->email = "eko@pzn.com";
+
+        $comment->save();
+
+        self::assertNotNull($comment->id);
+        self::assertNotNull($comment->title);
+        self::assertNotNull($comment->comment);
+    }
+
+
 }
