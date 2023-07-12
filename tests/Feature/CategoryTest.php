@@ -7,6 +7,7 @@ use Database\Seeders\CategorySeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use function PHPUnit\Framework\assertEquals;
 
 class CategoryTest extends TestCase
 {
@@ -118,6 +119,29 @@ class CategoryTest extends TestCase
 
         $total = Category::count();
         self::assertEquals(0, $total);
+    }
+
+    public function testDeleteMany()
+    {
+        $categories = [];
+        for ($i = 0; $i < 10; $i++) {
+            $categories[] = [
+                "id" => "ID $i",
+                "name" => "Name $i"
+            ];
+        }
+
+        $result = Category::insert($categories);
+        self::assertTrue($result);
+
+        $total = Category::count();
+        assertEquals(10, $total);
+
+        Category::whereNull("description")->delete();
+
+        $total = Category::count();
+        assertEquals(0, $total);
+
     }
 
 
