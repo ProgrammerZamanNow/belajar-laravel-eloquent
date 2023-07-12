@@ -7,3 +7,7 @@ show tables;
 select * from categories;
 
 select * from vouchers;
+
+describe comments;
+
+select * from comments;
