@@ -82,7 +82,7 @@ class CategoryTest extends TestCase
 
         $categories = Category::whereNull("description")->get();
         self::assertEquals(5, $categories->count());
-        $categories->each(function ($category){
+        $categories->each(function ($category) {
             self::assertNull($category->description);
 
             $category->description = "Updated";
@@ -221,6 +221,39 @@ class CategoryTest extends TestCase
 
         self::assertNotNull($products);
         self::assertCount(1, $products);
+    }
+
+    public function testOneToManyQuery()
+    {
+        $category = new Category();
+        $category->id = "FOOD";
+        $category->name = "Food";
+        $category->description = "Food Category";
+        $category->is_active = true;
+        $category->save();
+
+        $product = new Product();
+        $product->id = "1";
+        $product->name = "Product 1";
+        $product->description = "Description 1";
+
+        $category->products()->save($product);
+
+        self::assertNotNull($product->category_id);
+
+    }
+
+    public function testRelationshipQuery()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::find("FOOD");
+        $products = $category->products;
+        self::assertCount(1, $products);
+
+        $outOfStockProducts = $category->products()->where('stock', '<=', 0)->get();
+        self::assertCount(1, $outOfStockProducts);
+
     }
 
 
