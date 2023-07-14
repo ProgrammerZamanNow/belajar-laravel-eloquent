@@ -17,3 +17,5 @@ select * from customers_likes_products;
 select * from images;
 
 select * from persons;
+
+select * from employees;
