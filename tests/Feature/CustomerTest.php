@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Wallet;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\CustomerSeeder;
+use Database\Seeders\ImageSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\VirtualAccountSeeder;
 use Database\Seeders\WalletSeeder;
@@ -134,6 +135,19 @@ class CustomerTest extends TestCase
 
             self::assertNotNull($pivot->product);
         }
+    }
+
+    public function testOneToOnePolymorphic()
+    {
+        $this->seed([CustomerSeeder::class, ImageSeeder::class]);
+
+        $customer = Customer::find("EKO");
+        self::assertNotNull($customer);
+
+        $image = $customer->image;
+        self::assertNotNull($image);
+
+        self::assertEquals("https://www.programmerzamannow.com/image/1.jpg", $image->url);
     }
 
 
