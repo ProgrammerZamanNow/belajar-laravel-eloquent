@@ -19,14 +19,14 @@ class ImageSeeder extends Seeder
             $image = new Image();
             $image->url = "https://www.programmerzamannow.com/image/1.jpg";
             $image->imageable_id = "EKO";
-            $image->imageable_type = Customer::class;
+            $image->imageable_type = 'customer';
             $image->save();
         }
         {
             $image = new Image();
             $image->url = "https://www.programmerzamannow.com/image/2.jpg";
             $image->imageable_id = "1";
-            $image->imageable_type = Product::class;
+            $image->imageable_type = 'product';
             $image->save();
         }
     }

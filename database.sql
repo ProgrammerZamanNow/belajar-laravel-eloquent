@@ -13,3 +13,5 @@ describe comments;
 select * from comments;
 
 select * from customers_likes_products;
+
+select * from images;
