@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
@@ -16,15 +17,23 @@ class Customer extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    public function wallet(): HasOne {
+    public function wallet(): HasOne
+    {
         return $this->hasOne(Wallet::class, "customer_id", "id");
     }
 
-    public function virtualAccount() : HasOneThrough {
+    public function virtualAccount(): HasOneThrough
+    {
         return $this->hasOneThrough(VirtualAccount::class, Wallet::class, "customer_id", "wallet_id", "id", "id");
     }
 
-    public function reviews(): HasMany {
+    public function reviews(): HasMany
+    {
         return $this->hasMany(Review::class, "customer_id", "id");
+    }
+
+    public function likeProducts(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id");
     }
 }
