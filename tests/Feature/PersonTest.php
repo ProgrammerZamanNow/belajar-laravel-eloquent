@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Person;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -25,5 +26,17 @@ class PersonTest extends TestCase
         self::assertEquals("Morro", $person->last_name);
     }
 
+    public function testAttributeCasting()
+    {
+        $person = new Person();
+        $person->first_name = "Eko";
+        $person->last_name = "Khannedy";
+        $person->save();
+
+        self::assertNotNull($person->created_at);
+        self::assertNotNull($person->updated_at);
+        self::assertInstanceOf(Carbon::class, $person->created_at);
+        self::assertInstanceOf(Carbon::class, $person->updated_at);
+    }
 
 }
